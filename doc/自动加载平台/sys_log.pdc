@@ -1,0 +1,63 @@
+-- Create table
+create table SYS_LOG
+(
+  LOGID   VARCHAR2(20) not null,
+  OBJECTS VARCHAR2(100),
+  STAT    VARCHAR2(2),
+  MSG     VARCHAR2(2000),
+  STTIME  TIMESTAMP(6),
+  ENDTIME TIMESTAMP(6)
+)
+tablespace ODS_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 16K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column SYS_LOG.LOGID
+  is '日志ID';
+comment on column SYS_LOG.OBJECTS
+  is '执行存储或方法名';
+comment on column SYS_LOG.STAT
+  is '执行状态 0：执行正常结束 1：正在执行 -1：执行出错
+';
+comment on column SYS_LOG.MSG
+  is '错误信息';
+comment on column SYS_LOG.STTIME
+  is '执行开始时间';
+comment on column SYS_LOG.ENDTIME
+  is '执行结束时间';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table SYS_LOG
+  add constraint PK_SYS_LOG primary key (LOGID)
+  using index 
+  tablespace ODS_INDEX
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate indexes 
+create index INX_SYS_LOG_01 on SYS_LOG (OBJECTS)
+  tablespace ODS_INDEX
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

@@ -1,0 +1,228 @@
+create or replace procedure p_test01
+(
+p_lvl in varchar2
+,p_src in varchar2 default null
+,p_uuid in varchar2 default null
+,p_tgts out sys_refcursor
+,p_tgt out varchar2
+)
+ as
+
+v_p_lvl int :=p_lvl;
+
+type type_src is table of test01.src%type
+index by binary_integer;
+typ_src type_src;
+
+type type_tgt is table of test01.tgt%type
+index by binary_integer;
+typ_tgt type_tgt;
+
+type type_uuid is table of test01.uuid%type
+index by binary_integer;
+typ_uuid type_uuid;
+
+v_counter integer :=0;
+cursor c_test1 is
+/*with test01 as (
+select sys_guid() uuid,v.* from
+(
+select distinct 付款方名称 src,收款方名称 tgt,1 direction,level lvl
+from ZHCX.ZHCX_INVOICE_UNION_DISTINCT
+--where level<6
+start with 付款方名称='武汉杰瑞节能防水工程有限公司'
+connect by prior 收款方名称 = 付款方名称
+union all
+select distinct 收款方名称 src,付款方名称 tgt,0 direction,level lvl
+from ZHCX.ZHCX_INVOICE_UNION_DISTINCT
+--here level<6
+start with 收款方名称='武汉杰瑞节能防水工程有限公司'
+connect by prior 付款方名称 = 收款方名称
+)
+ v
+ where v.lvl<6
+)*/
+select t.uuid,t.src,t.tgt
+from test01 t
+where t.lvl=p_lvl
+and t.src=p_src
+;
+
+v_src varchar2(1000);
+
+v_counter2 integer :=0;
+v_tgt varchar2(1000);
+v_uuid varchar2(1000);
+cursor c_test2 is
+/*with test01 as (
+select sys_guid() uuid,v.* from
+(
+select distinct 付款方名称 src,收款方名称 tgt,1 direction,level lvl
+from ZHCX.ZHCX_INVOICE_UNION_DISTINCT
+--where level<6
+start with 付款方名称='武汉杰瑞节能防水工程有限公司'
+connect by prior 收款方名称 = 付款方名称
+union all
+select distinct 收款方名称 src,付款方名称 tgt,0 direction,level lvl
+from ZHCX.ZHCX_INVOICE_UNION_DISTINCT
+--here level<6
+start with 收款方名称='武汉杰瑞节能防水工程有限公司'
+connect by prior 付款方名称 = 收款方名称
+)
+ v
+ where v.lvl<6
+)*/
+select t.uuid,t.src,t.tgt from test01 t
+where level=1
+start with t.src=v_src
+connect by prior t.tgt = t.src
+;
+
+
+type tgt_rec_type is record
+(
+uuid varchar2(1000)
+,src varchar2(1000)
+,tgt varchar2(1000)
+);
+tgt_rec tgt_rec_type;
+
+cursor c_test3 is
+select t.uuid,t.src,t.tgt
+--into p_tgt
+from test01 t
+where t.src=v_tgt
+;
+
+
+begin
+
+if p_uuid is null then
+
+for src_rec in c_test1 loop
+  v_counter:=v_counter+1;
+  typ_src(v_counter):=src_rec.src;
+  typ_tgt(v_counter):=src_rec.tgt;
+  v_src:=typ_src(v_counter);
+  v_tgt:=typ_tgt(v_counter);
+  --dbms_output.put_line(v_src);
+
+  v_counter2 :=0;
+
+/*  for tgt_rec in c_test2 loop
+    EXIT WHEN c_test2%NOTFOUND;
+    dbms_output.put_line(tgt_rec);
+      v_counter2:=v_counter2+1;
+      --dbms_output.put_line(v_counter2);
+      --v_p_lvl:=v_p_lvl+1;
+      typ_src(v_counter2):=tgt_rec.tgt;
+      v_tgt:=typ_tgt(v_counter2);
+      v_uuid:=typ_uuid(v_counter2);
+      dbms_output.put_line(v_tgt);
+
+      p_test01(p_lvl=>'1',p_src=>'武汉杰瑞节能防水工程有限公司',p_uuid=>v_uuid,p_tgts=>p_tgts);
+  end loop;*/
+
+  open c_test2;
+  loop
+    fetch c_test2 into tgt_rec;
+    EXIT WHEN c_test2%NOTFOUND;
+      v_counter2:=v_counter2+1;
+      --dbms_output.put_line(v_counter2);
+      --v_p_lvl:=v_p_lvl+1;
+
+      typ_uuid(v_counter2):=tgt_rec.uuid;
+      typ_src(v_counter2):=tgt_rec.src;
+      typ_tgt(v_counter2):=tgt_rec.tgt;
+
+      v_uuid:=typ_uuid(v_counter2);
+      v_src:=typ_src(v_counter2);
+      v_tgt:=typ_tgt(v_counter2);
+
+      dbms_output.put_line(v_uuid||','||v_src||','||v_tgt);
+      dbms_output.put_line('level:'||(p_lvl));
+
+      p_test01(p_lvl=>p_lvl+1,p_src=>v_tgt,p_uuid=>v_uuid,p_tgts=>p_tgts,p_tgt=>p_tgt);
+  end loop;
+  close c_test2;
+
+  --最终把结果放进来：
+  open p_tgts for
+  select t.uuid,t.src,t.tgt from test01 t
+  start with t.src=v_src
+  connect by prior t.tgt = t.src
+  ;
+end loop;
+
+else
+  dbms_output.put_line('!!!!!!!!!!!');
+
+
+/*select t.tgt
+into p_tgt
+from test01 t
+where t.uuid=v_uuid
+;*/
+
+  open c_test3;
+  loop
+    fetch c_test3 into tgt_rec;
+    EXIT WHEN c_test3%NOTFOUND;
+    v_tgt:=tgt_rec.tgt;
+    dbms_output.put_line('??????????????');
+    dbms_output.put_line(v_tgt);
+    dbms_output.put_line('level:'||(p_lvl+1));
+    p_test01(p_lvl=>p_lvl+1,p_src=>v_tgt,p_uuid=>v_uuid,p_tgts=>p_tgts,p_tgt=>p_tgt);
+  end loop;
+  close c_test3;
+
+  --dbms_output.put_line(p_tgt);
+end if;
+
+end;
+/
+
+
+
+ 00: 00.08
+
+
+
+
+show error
+
+
+set serveroutput on
+var ttt1 REFCURSOR;
+var ttt2 varchar2(1000);
+set time on
+set timing on
+exec p_test01(p_lvl=>'1',p_src=>'武汉杰瑞节能防水工程有限公司',p_uuid=>null,p_tgts=>:ttt1,p_tgt=>:ttt2);
+1B8D1F7CED486B7287,武汉杰瑞节能防水工程有限公司,京山裕华商贸有限公司
+
+
+E298D8951E44C72980,武汉杰瑞节能防水工程有限公司,武汉建工集团股份有限公司
+
+
+0CB24378434EB6355F,武汉杰瑞节能防水工程有限公司,武汉市市政建设集团有限公司
+
+
+77B03EC6DED96F9FAE,武汉杰瑞节能防水工程有限公司,京山裕华商贸有限公司
+
+
+55B1924EFC2A8B33F8,武汉杰瑞节能防水工程有限公司,武汉建工集团股份有限公司
+
+
+DD987759456378CFF4,武汉杰瑞节能防水工程有限公司,武汉市市政建设集团有限公司
+
+
+EEA069476010E3ABB8,武汉杰瑞节能防水工程有限公司,京山裕华商贸有限公司
+
+
+719810887B8FBAAAE4,武汉杰瑞节能防水工程有限公司,武汉建工集团股份有限公司
+
+
+128937BCE7F2385A2F,武汉杰瑞节能防水工程有限公司,武汉市市政建设集团有限公司
+
+
+

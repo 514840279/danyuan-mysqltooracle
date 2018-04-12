@@ -1,0 +1,19 @@
+-- Create table
+create table SYS_LRD_COLS_MAP
+(
+  FILE_DESC VARCHAR2(1000),
+  FILE_COL  VARCHAR2(200),
+  TAB_NAME  VARCHAR2(200),
+  TAB_COL   VARCHAR2(200)
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

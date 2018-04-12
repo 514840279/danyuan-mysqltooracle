@@ -1,0 +1,8 @@
+Sub Ñ­»·Óï¾ä()
+Dim i, j As Integer
+For i = 1 To 9
+  For j = 1 To i
+    Cells(i, j) = i & "*" & j & "=" & i * j
+ Next
+Next
+End Sub

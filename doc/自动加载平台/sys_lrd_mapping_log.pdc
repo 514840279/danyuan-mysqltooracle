@@ -1,0 +1,34 @@
+-- Create table
+create table SYS_LRD_MAPPING_LOG
+(
+  LRD_TASK_ID    VARCHAR2(20),
+  EXE_SQL        VARCHAR2(4000),
+  EXE_START_TIME DATE,
+  EXE_COUNT      INTEGER,
+  EXE_TIME       INTEGER
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table SYS_LRD_MAPPING_LOG
+  is '入库执行日志';
+-- Add comments to the columns 
+comment on column SYS_LRD_MAPPING_LOG.LRD_TASK_ID
+  is '任务ID';
+comment on column SYS_LRD_MAPPING_LOG.EXE_SQL
+  is '执行SQL';
+comment on column SYS_LRD_MAPPING_LOG.EXE_START_TIME
+  is '执行开始时间';
+comment on column SYS_LRD_MAPPING_LOG.EXE_COUNT
+  is '插入数量';
+comment on column SYS_LRD_MAPPING_LOG.EXE_TIME
+  is '执行时间(s)';

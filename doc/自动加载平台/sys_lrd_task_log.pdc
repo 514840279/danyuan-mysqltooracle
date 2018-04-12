@@ -1,0 +1,24 @@
+-- Create table
+create table SYS_LRD_TASK_LOG
+(
+  LRD_TASK_ID VARCHAR2(20),
+  STAT        VARCHAR2(2),
+  START_TIME  TIMESTAMP(6),
+  END_TIME    TIMESTAMP(6)
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255;
+-- Add comments to the table 
+comment on table SYS_LRD_TASK_LOG
+  is '加载任务执行日志';
+-- Add comments to the columns 
+comment on column SYS_LRD_TASK_LOG.LRD_TASK_ID
+  is '任务ID';
+comment on column SYS_LRD_TASK_LOG.STAT
+  is '状态 0:等待中 1:执行中 -1:出现错误';
+comment on column SYS_LRD_TASK_LOG.START_TIME
+  is '开始执行时间';
+comment on column SYS_LRD_TASK_LOG.END_TIME
+  is '结束时间';

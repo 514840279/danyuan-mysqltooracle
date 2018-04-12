@@ -1,0 +1,23 @@
+-- 已经入库 数据统计   10828   15341857
+select count(1),sum(t.row_count) from sys_files_info t
+where t.flag = '2'
+
+
+-- 没有入库数据统计   387240
+select count(1),sum(t.row_count) from sys_files_info t
+where t.flag ='0'
+and t.type in(  '#search' , 'txt' , 'xlsx' , 'xls' , 'csv' , 'mdb' , 'rar' , 'zip' , 'dbf' , 'doc' , 'sql' , 'lnk' , 'jpg' , 'bmp' , 'jpeg' , 'htm' , 'png' , ''
+            )
+
+--  y异常信息标示  2
+select sysfilesin0_.flag,
+       sysfilesin0_.inser_num,
+       sysfilesin0_.to_database_table_name,
+       sysfilesin0_.file_path,
+       sysfilesin0_.*,
+       sysfilesin0_.rowid
+  from sys_files_info sysfilesin0_
+ where (sysfilesin0_.flag = '-3' or sysfilesin0_.flag is null)
+   and (sysfilesin0_.type in
+       ('#search', 'txt', 'xlsx', 'xls', 'csv', 'mdb', 'rar', 'zip', 'dbf',
+        'doc', 'sql', 'lnk', 'jpg', 'bmp', 'jpeg', 'htm', 'png', ''));

@@ -1,0 +1,123 @@
+﻿思想准备：需要耐心，细心
+
+要准备的东西：
+注意：传到本地前后，要用md5sum工具检查md5值，确保一样。
+
+找到对应版本的数据库（分清操作系统版本和位数）：
+	p13390677_112040_Linux-x86-64_1of7.zip
+	p13390677_112040_Linux-x86-64_2of7.zip
+	
+	最稳妥的解压方式：
+	1.解压第一个
+	2.解压第二个
+	3.把第二个放到第一个里面，覆盖。
+
+安装前，要确保：
+	1.确保防火墙关闭
+	2.用户账户控制设置降到最低
+	3.杀毒软件最好关闭
+        4.net user Administrator /active:yes
+
+服务里面有无Oracle开头的服务
+
+
+把C盘共享，确保以下能访问：
+\\127.0.0.1\c$
+
+参考：
+http://blog.csdn.net/wenzhongyan/article/details/45022317
+
+打补丁工具：6880880
+使用D:\app\Administrator\product\11.2.0\db2home_1\OPatch\ocm\bin\emocmrsp.bat
+生成一个ocm.rsp文件，如果没有可以用其他环境拷贝过来的。
+
+
+
+
+
+查看数据库版本：
+1.看软件版本和补丁情况
+D:\app\Administrator\product\11.2.0\db2home_1\OPatch>.\opatch lsinventory
+
+
+
+开始打补丁：
+D:\app\Administrator\product\11.2.0\db2home_1\OPatch>opatch apply D:\p20502905_112040_MSWIN-x86-64\20502905 -ocmrf D:\app\Administrator\product\11.2.0\db2home_1\OPatch\ocm\bin\ocm.rsp
+
+（如果dll未释放，则考虑关闭服务里面的Oracle服务）
+
+
+D:\app\Administrator\product\11.2.0\db2home_1\OPatch>opatch apply  D:\p20225982_1120414forWindows_MSWIN-x86-64\20225982 -ocmrf D:\app\Administrator\product\11.2.0\db2home_1\OPatch\ocm\bin\ocm.rsp
+
+
+D:\app\Administrator\product\11.2.0\db2home_1\BIN>db2ca（失败，由于内存太小，然后手动创建db2）
+
+initorcl.ora:
+
+*.compatible='11.2.0.0.0'                                                               
+*.control_files='f:\db2\orcl25\control00.ctl'                         
+*.db_block_size=8192                                                                    
+*.db_domain=''                                                                          
+*.db_name='orcl25'                                                                                                      
+*.diagnostic_dest='D:\app\Administrator'                                                       
+*.memory_target=1500M                                                     
+*.open_cursors=300                                                                      
+*.processes=5000                                                                        
+*.remote_login_passwordfile='EXCLUSIVE'                                                 
+*.undo_tablespace='UNDOTBS1'                                                            
+*.undo_management=auto                                                                  
+*.audit_trail=NONE                                                                      
+*._optimizer_use_feedback=false                                                         
+*.disk_asynch_io=true                                                                   
+*.db_create_file_dest='f:\db2'                                         
+*.resource_limit=true  
+
+#oradim -delete -sid orcl25
+oradim -new -sid orcl25 -startmode auto -srvcstart system
+--startup force mount;
+--alter system enable restricted session;
+--drop database;
+
+set oracle_sid=orcl25
+sqlplus / as sysdba
+startup nomount
+
+SQL> select status from v$instance;
+
+STATUS
+------------------------
+STARTED
+
+create database orcl25                                                                                                             
+user sys identified by smorcl                                                                                                    
+user system identified by smorcl                                                                                               
+maxinstances 1           
+maxloghistory 100    
+maxlogfiles 5
+maxlogmembers 3 
+maxdatafiles 1000   
+character set al32utf8    
+national character set al16utf16  
+logfile                                                                                               
+group 1 ('f:\db2\orcl25\redo01.log') size 50m,                                                                       
+group 2 ('f:\db2\orcl25\redo02.log') size 50m,                                                                       
+group 3 ('f:\db2\orcl25\redo03.log') size 50m,                                                                       
+group 4 ('f:\db2\orcl25\redo04.log') size 50m,                                                                       
+group 5 ('f:\db2\orcl25\redo05.log') size 50m,                                                                       
+group 6 ('f:\db2\orcl25\redo06.log') size 50m                                                                        
+datafile 'f:\db2\orcl25\system.dbf' size 100m autoextend on next 100m maxsize unlimited                              
+sysaux datafile 'f:\db2\orcl25\sysaux.dbf' size 50m autoextend on next 100m maxsize unlimited                        
+default tablespace users datafile 'f:\db2\orcl25\user01.dbf' size 50m autoextend on next 100m maxsize unlimited      
+undo tablespace undotbs1 datafile 'f:\db2\orcl25\undotbs01.dbf' size 500m autoextend on next 100m maxsize unlimited; 
+
+@?\rdb2ms\admin\catalog.sql
+@?\rdb2ms\admin\catproc.sql   
+
+create temporary tablespace temp tempfile 'f:\db2\orcl25\temp.db2f' size 1500m;
+alter database default temporary tablespace temp;
+
+alter profile default limit password_life_time unlimited;
+alter profile default limit failed_login_attempts unlimited;
+conn system/smorcl
+@?\sqlplus\admin\pupbld.sql
+

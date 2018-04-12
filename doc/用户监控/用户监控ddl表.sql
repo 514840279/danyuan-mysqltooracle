@@ -1,0 +1,14 @@
+-- Create table
+create table SYS_TAB_DDL
+(
+  LOGIN_USER         VARCHAR2(4000),
+  AUDSID             VARCHAR2(4000),
+  MACHINE            VARCHAR2(4000),
+  IPADDRESS          VARCHAR2(4000),
+  SCHEMA_USER        VARCHAR2(4000),
+  SCHEMA_OBJECT      VARCHAR2(4000),
+  SCHEMA_OBJECT_TYPE VARCHAR2(4000),
+  DDL_TIME           DATE,
+  DDL_SQL            VARCHAR2(4000),
+  MODULE             VARCHAR2(4000)
+)

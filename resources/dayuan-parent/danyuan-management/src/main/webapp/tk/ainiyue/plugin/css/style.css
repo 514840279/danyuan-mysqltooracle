@@ -1,0 +1,32 @@
+body {
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+}
+
+table {
+	font-size: 12px;
+}
+
+.table_border {
+	border-collapse: collapse;
+}
+
+.table_border td {
+	border: 1px solid #CCCCCC
+}
+
+.table_border th {
+	border: 1px solid #CCCCCC
+}
+
+#content {
+	width: 800px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+}

@@ -1,0 +1,36 @@
+-- Create table
+create table AAA_入库日志
+(
+  完成后表名  VARCHAR2(500),
+  注释     VARCHAR2(4000),
+  QXK_SM VARCHAR2(3000),
+  LRD单号  VARCHAR2(34),
+  录入方式   VARCHAR2(20),
+  录入时间   DATE default sysdate
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column AAA_入库日志.完成后表名
+  is '表名';
+comment on column AAA_入库日志.注释
+  is '表注释';
+comment on column AAA_入库日志.QXK_SM
+  is '来源';
+comment on column AAA_入库日志.LRD单号
+  is '任务单号';
+comment on column AAA_入库日志.录入方式
+  is '平台，还是手动录入';
+comment on column AAA_入库日志.录入时间
+  is '录入时间点';
+-- Grant/Revoke object privileges 
+grant select, insert, update on AAA_入库日志 to CJZX;

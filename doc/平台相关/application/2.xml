@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job version="9.0">
+<exportjob>
+<source>
+<host>192.168.2.10</host>
+<user>root</user>
+<pwd>caiJi321.</pwd>
+<port>3306</port>
+
+<compressed>1</compressed>
+<ssl>0</ssl>
+<sslauth>0</sslauth>
+<clientkey></clientkey>
+<clientcert></clientcert>
+<cacert></cacert>
+<cipher></cipher>
+<charset></charset>
+</source>
+<export>
+<databases all="no">
+<database name = "NearbyPeople">
+<objects all="no">
+<tables all="yes">
+</tables>
+<views all="yes">
+</views>
+<procedures all="yes">
+</procedures>
+<functions all="yes">
+</functions>
+<triggers all="yes">
+</triggers>
+<events all="yes">
+</events>
+</objects>
+</database>
+</databases>
+<script compress="no" fileordir="file" timestampdir="" timestamp="no">F:\fuck\danyuan-mysqltooracle\doc\平台相关\application\bakup17-10.sql</script>
+</export>
+<options>
+<createdb>yes</createdb>
+<usedb>yes</usedb>
+<dropobjects>yes</dropobjects>
+<bulkinsert>no</bulkinsert>
+<completeinsert>yes</completeinsert>
+<insertdelayed>no</insertdelayed>
+<flushlogs>no</flushlogs>
+<flushmaster>no</flushmaster>
+<flushslave>no</flushslave>
+<locktableread>no</locktableread>
+<singletransaction>no</singletransaction>
+<disablekeys>no</disablekeys>
+<locktablewrite>no</locktablewrite>
+<fkchecks>yes</fkchecks>
+<autocommit>no</autocommit>
+<usecharset>utf8</usecharset>
+<bulksize>0</bulksize>
+<appendtofile>no</appendtofile>
+</options>
+<abortonerror>no</abortonerror>
+<sendreport send="no" /></exportjob>
+</job>

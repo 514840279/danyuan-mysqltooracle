@@ -1,0 +1,122 @@
+yum install -y samba
+useradd smkj 
+smbpasswd -a smkj
+smbpasswd -a root
+
+vim /etc/sysconfig/selinux
+修改：enforcing
+改成：disabled
+setenforce 0
+
+mkdir -p /home/db3/disk
+chown smkj:root -R /home/db3/disk
+
+vim /etc/samba/smb.conf
+修改：
+security=user
+追加：
+[share]
+path=/home/db3/disk/
+valid users=root,smkj
+create mask=0775
+directory mask=0775
+force user=smkj
+force group=root
+public=yes
+writable=yes
+browseable=yes
+available=yes
+
+service smb restart
+
+拷贝操作：
+    mkdir -p /home/db3/disk/disk5/
+    script /home/db3/disk/disk5/20160805_5.log
+    cp -R /home/tmp/* /home/db3/disk/disk5/
+    exit
+
+访问路径：
+    \\172.16.3.2\share\disk5
+    用户名/密码：smkj/sm12345
+
+============================
+给采集组增加权限
+useradd smcaiji
+smbpasswd -a smcaiji
+smbpasswd -a root
+密码：caiJi321.
+
+mkdir -p /home/db3/caiji
+chown smcaiji:root -R /home/db3/caiji
+chmod -R 775 /home/db3/caiji
+
+vim /etc/samba/smb.conf
+追加：
+[caiji]
+path=/home/db3/caiji
+valid users=smcaiji
+create mask=0775
+directory mask=0775
+force user=smcaiji
+#force group=root
+public=yes
+writable=yes
+browseable=yes
+available=yes
+
+service smb restart
+提交给采集组：
+smcaiji/smcaiji
+
+
+
+============================
+给于量增加权限
+useradd smpolice
+smbpasswd -a smpolice
+密码：smpolice
+
+mkdir -p /home/db3/police
+chown smpolice:root -R /home/db3/police
+chmod -R 775 /home/db3/police
+
+vim /etc/samba/smb.conf
+追加：
+[police]
+path=/home/db3/police
+valid users=smpolice
+create mask=0775
+directory mask=0775
+force user=smpolice
+#force group=root
+public=yes
+writable=yes
+browseable=yes
+available=yes
+
+service smb restart
+提交给于量：
+\\172.16.3.2\smpolice
+密码：smpolice
+
+=================================
+退出登录：
+net use * /delete /y
+
+
+
+防火墙添加例外：
+
+vim /etc/sysconfig/iptables
+#samba:
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 137 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 138 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 389 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 445 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 901 -j ACCEPT
+
+/etc/init.d/iptables stop
+/etc/init.d/iptables start
+/etc/init.d/iptables status
+

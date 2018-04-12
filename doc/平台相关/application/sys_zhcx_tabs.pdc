@@ -1,0 +1,34 @@
+-- Create table
+create table SYS_ZHCX_TABS
+(
+  UUID        VARCHAR2(100) not null,
+  TYPE_UUID   VARCHAR2(46),
+  TABLE_NAME  VARCHAR2(80),
+  TABLE_DESC  VARCHAR2(500),
+  TABLE_ROWS  NUMBER,
+  TABLE_SPACE NUMBER,
+  TABLE_ORDER NUMBER,
+  CREATE_USER VARCHAR2(46),
+  CREATE_TIME DATE,
+  UPDATE_USER VARCHAR2(46),
+  UPDATE_TIME DATE,
+  DELETE_FLAG VARCHAR2(1),
+  TJ_FLAG     VARCHAR2(1),
+  ES_NAME     VARCHAR2(100),
+  DB_TYPE     VARCHAR2(80),
+  COLS_TIME   VARCHAR2(100)
+)
+tablespace HADOOP
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column SYS_ZHCX_TABS.COLS_TIME
+  is '索引列出现次数';

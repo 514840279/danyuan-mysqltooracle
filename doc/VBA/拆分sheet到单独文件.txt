@@ -1,0 +1,8 @@
+Sub test()
+Dim i As Integer
+For i = 1 To Sheets.Count
+Sheets(i).Copy
+ActiveWorkbook.SaveAs ActiveSheet.Name & ".xls"
+ThisWorkbook.Activate
+Next i
+End Sub

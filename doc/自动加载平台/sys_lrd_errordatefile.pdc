@@ -1,0 +1,73 @@
+-- Create table
+create table SYS_LRD_ERRORDATEFILE
+(
+  ID              NUMBER not null,
+  NAME            VARCHAR2(10),
+  DATE1           VARCHAR2(8),
+  ERROR_FILE_PATH VARCHAR2(500),
+  ERROR_DATE_SIZE NUMBER,
+  ORI_FILE_PATH   VARCHAR2(4000),
+  ORI_DATE_SIZE   NUMBER,
+  INSET_DATE      DATE default sysdate,
+  UPDATE_DATE     TIMESTAMP(6),
+  UPDATE_NAME     VARCHAR2(10),
+  UPDATE_REASON   VARCHAR2(4000),
+  ERROR_OR_MORE   VARCHAR2(100),
+  FLAG            VARCHAR2(2) default 0
+)
+tablespace ZHCX_DATA
+  pctfree 2
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table SYS_LRD_ERRORDATEFILE
+  is '错误文件的信息';
+-- Add comments to the columns 
+comment on column SYS_LRD_ERRORDATEFILE.ID
+  is '主键';
+comment on column SYS_LRD_ERRORDATEFILE.NAME
+  is '姓名';
+comment on column SYS_LRD_ERRORDATEFILE.DATE1
+  is '日期';
+comment on column SYS_LRD_ERRORDATEFILE.ERROR_FILE_PATH
+  is '错误文件地址';
+comment on column SYS_LRD_ERRORDATEFILE.ERROR_DATE_SIZE
+  is '错误数据量';
+comment on column SYS_LRD_ERRORDATEFILE.ORI_FILE_PATH
+  is '原文件';
+comment on column SYS_LRD_ERRORDATEFILE.ORI_DATE_SIZE
+  is '原数据量';
+comment on column SYS_LRD_ERRORDATEFILE.INSET_DATE
+  is '插入时间';
+comment on column SYS_LRD_ERRORDATEFILE.UPDATE_DATE
+  is '更新时间';
+comment on column SYS_LRD_ERRORDATEFILE.UPDATE_NAME
+  is '更新的人';
+comment on column SYS_LRD_ERRORDATEFILE.UPDATE_REASON
+  is '更新原因';
+comment on column SYS_LRD_ERRORDATEFILE.ERROR_OR_MORE
+  is '错误文件/超出长度的文件';
+comment on column SYS_LRD_ERRORDATEFILE.FLAG
+  is '文件入库结束标志：0、文件准备中，2，文件执行中，3，文件执行完，-1、执行出错，10、取消执行入库';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table SYS_LRD_ERRORDATEFILE
+  add constraint ERRORFILEID primary key (ID)
+  using index 
+  tablespace ZHCX_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

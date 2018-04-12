@@ -1,0 +1,11 @@
+mvn install:install-file  -Dfile=dnsjava-2.0.3.jar -DgroupId=org.dnsjava -DartifactId=dnsjava -Dversion=2.0.3 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true
+
+ mvn install:install-file  -Dfile=mg4j-1.0.1.jar -DgroupId=it.unimi.dsi -DartifactId=mg4j -Dversion=1.0.1 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true
+
+ mvn install:install-file  -Dfile=javaswf-CVS-SNAPSHOT-1.jar -DgroupId=com.anotherbigidea -DartifactId=javaswf -Dversion=CVS-SNAPSHOT-1 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true
+
+ mvn install:install-file  -Dfile=kryo-1.01.jar -DgroupId=com.esotericsoftware -DartifactId=kryo -Dversion=1.01 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true
+
+mvn install:install-file  -Dfile=reflectasm-0.8.jar -DgroupId=com.esotericsoftware -DartifactId=reflectasm -Dversion=0.8 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true
+
+ mvn install:install-file  -Dfile=minlog-1.2.jar -DgroupId=com.esotericsoftware -DartifactId=minlog -Dversion=1.2 -Dpackaging=jar  -DgeneratePom=true -DcreateChecksum=true

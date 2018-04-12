@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="datatransform" match-name="sys_department_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_menu_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_organization_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_roles_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_roles_jurisdiction_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_user_base_info"/>
+  <table-filter match-catalog="datatransform" match-name="sys_user_roles_info"/>
+</hibernate-reverse-engineering>

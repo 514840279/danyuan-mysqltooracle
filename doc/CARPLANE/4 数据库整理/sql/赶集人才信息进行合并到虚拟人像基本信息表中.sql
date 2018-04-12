@@ -1,0 +1,61 @@
+insert into sys_virtual_persion_base_info
+  (uuid,
+   id,
+   qq,
+   nick,
+   real_name,
+   address,
+   email,
+   sex,
+   birthday,
+   DEGREE,
+   corporation,
+   create_time,
+   update_time,
+   school_name,
+   hometown,
+   head_pic,
+   data_source,
+   province,
+   city,
+   birthday_year,
+   school_name_list,
+   duties,
+   ip,
+   WEB_URL)
+   
+  select UUID,
+         USER_ID as id,
+         QQ,
+         USER_NICK,
+         USER_NAME as real_name,
+         PROVINCE || CITY as address,
+         EMAIL,
+         GENDER as sex,
+         BIRTHDAY,
+         DEGREE,
+         EXP_COMP1 || ',' || EXP_COMP2 || ',' || EXP_COMP3 || ',' ||
+         EXP_COMP4 || ',' || EXP_COMP5 || ',' || EXP_COMP6 || ',' ||
+         EXP_COMP7 as corporation,
+         to_date(GNRT_TIME,'YYYY-MM-DD HH24:MI:SS') as create_time,
+         to_date(UPDATE_TIME,'YYYY-MM-DD HH24:MI:SS')  as update_time,
+         EXP_TEACH1 || ',' || EXP_TEACH2 || ',' || EXP_TEACH3 || ',' ||
+         EXP_TEACH4 || ',' || EXP_TEACH5 || ',' || EXP_TEACH6 || ',' ||
+         EXP_TEACH7 as school_name,
+         ORIGIN_LOC as hometown,
+         PHOTO_URL as head_pic,
+         INFO_SRC as data_source,
+         nvl(PROVINCE, city) as PROVINCE,
+         CITY,
+         to_number(func_birth_4(BIRTHDAY)) as birthday_year,
+         
+         EXP_TEACH1 || ',' || EXP_TEACH2 || ',' || EXP_TEACH3 || ',' ||
+         EXP_TEACH4 || ',' || EXP_TEACH5 || ',' || EXP_TEACH6 || ',' ||
+         EXP_TEACH7 as school_name_list,
+         
+         APPLY_JOB as duties,
+         IP_ADDR   as ip,
+         WEB_URL
+    from wth.ci_ganji_resume@dblink_172_16_3_18 t;
+    -- ◊¢“‚Ã·Ωª
+    commit;

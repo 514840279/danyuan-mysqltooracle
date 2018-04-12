@@ -1,0 +1,24 @@
+-- Create table
+create table UPLOADREPORT
+(
+  ID          VARCHAR2(4000) not null,
+  UPLOADUSERS VARCHAR2(4000),
+  USERNAME    VARCHAR2(4000),
+  WJMS        VARCHAR2(4000),
+  FILENAME    VARCHAR2(4000),
+  FILEURL     VARCHAR2(4000),
+  UPLOADTIME  TIMESTAMP(6),
+  FLAG        VARCHAR2(20),
+  ROWCOUNT    NUMBER
+)
+tablespace ZHCX_GAXX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

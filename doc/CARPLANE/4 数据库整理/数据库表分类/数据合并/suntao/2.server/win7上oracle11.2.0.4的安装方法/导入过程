@@ -1,0 +1,30 @@
+
+1.用split工具拆分成碎片，看第一个碎片，从而确定2点：
+    1.是用exp还是用expdp
+    2.确定文件的字符集（fileencoding）：al32utf8，zhs16gbk
+
+2.假设确定为expdp工具导出的：
+    1.打开cmd，进入到：%oracle_home%\bin
+    2.set nls_lang=american_america.al32utf8
+    3.  sqlplus / as sysdba
+    4.  create user sf2015 identified by smsf account unlock default tablespace shunfeng2015;
+        select username,default_tablespace from dba_users where username='SF2015';
+    5.create directory test as 'F:\shunfeng2015';
+    6.grant read,write on directory test to sf2015;
+    7.grant imp_full_database,select any table,connect,resource to sf2015;
+    
+    8.
+    create user SF259026 identified by smsf account unlock;
+    grant resource,select any table,connect to SF259026;
+    create user SF346845 identified by smsf account unlock;
+    grant resource,select any table,connect to SF346845;
+
+    impdp sf2015/smsf directory=test dumpfile=GASLJ_201510_201512.dmp logfile=GASLJ_201510_201512.log remap_table=SF259026.gaslj_201510_201512:sf346845.gab_slj_201501_201503 remap_tablespace=temp_data:shunfeng2015
+    
+    remap_schema=SF259026:sf2015,SF346845:sf2015
+
+
+注意点：
+    1.impdp一定要先上传到服务器上。
+    2.如果在导入的过程中关闭cmd窗口，导入过程还在后台进行。
+        ctrl+c中断，然后输入kill_job，回车

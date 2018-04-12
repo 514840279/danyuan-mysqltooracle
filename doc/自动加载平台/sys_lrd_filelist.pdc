@@ -1,0 +1,34 @@
+-- Create table
+create table SYS_LRD_FILELIST
+(
+  FILEPATH        VARCHAR2(1000),
+  FILENAME        VARCHAR2(200),
+  STATEFLAG       VARCHAR2(10),
+  DATE1           DATE default sysdate,
+  REASON          VARCHAR2(4000),
+  REMOVEERRORCODE VARCHAR2(10) default 0
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column SYS_LRD_FILELIST.FILEPATH
+  is '文件绝对路径（含名称）';
+comment on column SYS_LRD_FILELIST.FILENAME
+  is '文件名';
+comment on column SYS_LRD_FILELIST.STATEFLAG
+  is '0：文件录入，-1：执行出错，1：执行开始，2：执行完了,3:sp执行完了，10：废弃,13:新加字段了，11：未配置表的列，12：文件和表的关系都没有配置';
+comment on column SYS_LRD_FILELIST.DATE1
+  is '文件录入，最后一次操作 日期';
+comment on column SYS_LRD_FILELIST.REASON
+  is '说明废弃的原因';
+comment on column SYS_LRD_FILELIST.REMOVEERRORCODE
+  is '进行删除错误行，0未执行，1执行过';

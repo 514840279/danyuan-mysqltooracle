@@ -1,0 +1,13 @@
+create user sf2015 identified by smsf account unlock;
+grant imp_full_database,select any table,resource to sf2015;
+
+#set nls_lang=SIMPLIFIED CHINESE_CHINA.ZHS16GBK
+
+set nls_lang=SIMPLIFIED CHINESE_CHINA.AL32UTF8
+imp sf2015/smfs fromuser=sf2015 touser=sf2015 file=F:\shunfeng2015\GASLJ_201510_201512.dmp log=E:\tmp\GASLJ_201510_201512.log
+
+
+
+×ÊÁÏ.dmp
+
+

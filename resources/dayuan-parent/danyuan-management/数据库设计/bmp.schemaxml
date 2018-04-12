@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">datatransform</database>
+</source>
+<canvas zoom="130">
+<tables>
+<table name="sys_department_info" view="colnames">
+<left>497</left>
+<top>452</top>
+<width>230</width>
+<height>252</height>
+<sql_create_table>CREATE TABLE `sys_department_info` (
+  `uuid` varchar(32) NOT NULL,
+  `department_discription` varchar(1024) NOT NULL,
+  `department_name` varchar(50) NOT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `organization_id` varchar(32) NOT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  PRIMARY KEY (`uuid`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `sys_department_info_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `sys_organization_info` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_menu_info" view="colnames">
+<left>745</left>
+<top>20</top>
+<width>185</width>
+<height>363</height>
+<sql_create_table>CREATE TABLE `sys_menu_info` (
+  `uuid` varchar(32) NOT NULL,
+  `developer` varchar(50) NOT NULL,
+  `discription` varchar(1024) NOT NULL,
+  `flag` varchar(30) DEFAULT NULL,
+  `insert_datetime` date NOT NULL,
+  `system_name` varchar(100) NOT NULL,
+  `updata_datatime` date DEFAULT NULL,
+  `class_type` varchar(100) NOT NULL,
+  `menu_name` varchar(50) NOT NULL,
+  `parents_id` varchar(32) NOT NULL,
+  `system_id` varchar(32) NOT NULL,
+  `uri` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`uuid`),
+  KEY `system_id` (`system_id`),
+  CONSTRAINT `sys_menu_info_ibfk_1` FOREIGN KEY (`system_id`) REFERENCES `sys_system_info` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_organization_info" view="colnames">
+<left>796</left>
+<top>457</top>
+<width>235</width>
+<height>230</height>
+<sql_create_table>CREATE TABLE `sys_organization_info` (
+  `uuid` varchar(32) NOT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `organization_discription` varchar(1024) NOT NULL,
+  `organization_name` varchar(32) NOT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_roles_info" view="colnames">
+<left>263</left>
+<top>153</top>
+<width>185</width>
+<height>252</height>
+<sql_create_table>CREATE TABLE `sys_roles_info` (
+  `uuid` varchar(32) NOT NULL,
+  `department_id` varchar(50) NOT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `role_discription` varchar(500) DEFAULT NULL,
+  `role_name` varchar(32) NOT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  PRIMARY KEY (`uuid`),
+  KEY `department_id` (`department_id`),
+  CONSTRAINT `sys_roles_info_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `sys_department_info` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_roles_jurisdiction_info" view="colnames">
+<left>525</left>
+<top>13</top>
+<width>185</width>
+<height>269</height>
+<sql_create_table>CREATE TABLE `sys_roles_jurisdiction_info` (
+  `uuid` varchar(32) NOT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `menu_id` varchar(255) DEFAULT NULL,
+  `role_id` varchar(255) DEFAULT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  PRIMARY KEY (`uuid`),
+  KEY `menu_id` (`menu_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `sys_roles_jurisdiction_info_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu_info` (`uuid`),
+  CONSTRAINT `sys_roles_jurisdiction_info_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `sys_user_roles_info` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_system_info" view="colnames">
+<left>955</left>
+<top>85</top>
+<width>185</width>
+<height>252</height>
+<sql_create_table>CREATE TABLE `sys_system_info` (
+  `uuid` varchar(32) NOT NULL,
+  `developer` varchar(50) NOT NULL,
+  `discription` varchar(1024) NOT NULL,
+  `flag` varchar(30) DEFAULT NULL,
+  `insert_datetime` date NOT NULL,
+  `system_name` varchar(100) NOT NULL,
+  `updata_datatime` date DEFAULT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_user_base_info" view="colnames">
+<left>239</left>
+<top>459</top>
+<width>185</width>
+<height>319</height>
+<sql_create_table>CREATE TABLE `sys_user_base_info` (
+  `uuid` varchar(32) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `persion_name` varchar(50) NOT NULL,
+  `seniority` float DEFAULT NULL,
+  `sex` varchar(2) DEFAULT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  `user_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`uuid`),
+  UNIQUE KEY `UK_filjsx4kbabuqh2fkxgd72dx5` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sys_user_roles_info" view="colnames">
+<left>21</left>
+<top>22</top>
+<width>185</width>
+<height>212</height>
+<sql_create_table>CREATE TABLE `sys_user_roles_info` (
+  `uuid` varchar(32) NOT NULL,
+  `flag` varchar(2) DEFAULT NULL,
+  `insert_datetime` datetime NOT NULL,
+  `roles_id` varchar(32) NOT NULL,
+  `updata_datatime` datetime DEFAULT NULL,
+  `user_id` varchar(32) NOT NULL,
+  PRIMARY KEY (`uuid`),
+  KEY `roles_id` (`roles_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `sys_user_roles_info_ibfk_1` FOREIGN KEY (`roles_id`) REFERENCES `sys_roles_info` (`uuid`),
+  CONSTRAINT `sys_user_roles_info_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `sys_user_base_info` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

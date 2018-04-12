@@ -1,0 +1,44 @@
+电商目前找到这些表：
+
+        京东：
+        EB_JINGDONG_COMMENT_201505
+        EB_JINGDONG_COMMENT_201504
+        EB_JINGDONG_COMMENT_201506
+
+        EB_JINGDONG_COMMENT_201501@dblink_172_16_3_18
+        EB_JINGDONG_COMMENT_201503@dblink_172_16_3_18
+        EB_JINGDONG_COMMENT_201504@dblink_172_16_3_18
+        EB_JINGDONG_COMMENT_201505@dblink_172_16_3_18
+        EB_JINGDONG_COMMENT_201506@dblink_172_16_3_18
+
+        WDXX_JINGDONGPINGLUN_DN_OK@dblink_172_16_3_18
+
+        苏宁：
+        EB_SUNING_USER_HIST
+        EB_SUNING_COMMENT@dblink_172_16_3_18
+        EB_SUNING_USER@dblink_172_16_3_18
+        EB_SUNING_YIFUBAO_20150824@dblink_172_16_3_18
+
+        淘宝：
+        EB_TAOBAO_USER_REL
+        ED_TAOBAO_USER@dblink_172_16_3_18
+        当当：
+        DANGDANGSHUJU1209
+
+        ？：
+        EB_JIU_COMMODITY_20150204
+
+        微卖：
+        EB_WEIMAI_SELLER_201507@dblink_172_16_3_18
+        TMP_EB_WEIMAI_ORDERINFO_201507@dblink_172_16_3_18
+
+        TV shop商城:
+        ED_TVSHOP_20150504
+
+        百度交易：
+        ZS_JIAOYI_BAIDU_CT
+
+        搜狗交易：
+        ZS_JIAOYI_SOUGOU_CT
+
+    大姐,逻辑上合并一下，弄成一个文件。

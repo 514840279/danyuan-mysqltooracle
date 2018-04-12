@@ -1,0 +1,24 @@
+-- Create table
+create table SYS_ZHCX_TYPE
+(
+  UUID        VARCHAR2(46) not null,
+  TYPE_NAME   VARCHAR2(30),
+  TYPE_CLASS  VARCHAR2(30),
+  TYPE_ORDER  VARCHAR2(30),
+  CREATE_USER VARCHAR2(46),
+  CREATE_TIME DATE,
+  UPDATE_USER VARCHAR2(46),
+  UPDATE_TIME DATE,
+  DELETE_FLAG CHAR(1)
+)
+tablespace HADOOP
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

@@ -1,0 +1,18 @@
+-- Create table
+create table SYS_ZHCX_USER_INDEX_CODE
+(
+  USER_INDEX        VARCHAR2(60),
+  USER_INDEXES_NAME VARCHAR2(50)
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

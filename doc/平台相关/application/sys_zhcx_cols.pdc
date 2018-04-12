@@ -1,0 +1,54 @@
+-- Create table
+create table SYS_ZHCX_COLS
+(
+  UUID               VARCHAR2(128) not null,
+  TABLE_UUID         VARCHAR2(150),
+  COLS_NAME          VARCHAR2(600) not null,
+  COLS_DESC          VARCHAR2(1000),
+  COLD_TYPE          VARCHAR2(212),
+  COLD_LENGTH        NUMBER not null,
+  COLS_ORDER         NUMBER,
+  PAGE_INPUT         CHAR(1),
+  PAGE_LIST          CHAR(1),
+  PAGE_VIEW          CHAR(1),
+  USER_INDEX         VARCHAR2(60),
+  CREATE_USER        VARCHAR2(1000),
+  CREATE_TIME        DATE,
+  UPDATE_USER        VARCHAR2(92),
+  UPDATE_TIME        DATE,
+  DELETE_FLAG        CHAR(1),
+  TJ_COLS_NAME0      VARCHAR2(60),
+  TJ_COLS_DESC0      VARCHAR2(1000),
+  TJ_COLS_CODE_DESC0 VARCHAR2(1000),
+  TJ_COLS_NAME1      VARCHAR2(60),
+  TJ_COLS_DESC1      VARCHAR2(1000),
+  TJ_COLS_CODE_DESC1 VARCHAR2(1000),
+  TJ_COLS_NAME2      VARCHAR2(60),
+  TJ_COLS_DESC2      VARCHAR2(1000),
+  TJ_COLS_CODE_DESC2 VARCHAR2(1000),
+  TJ_COLS_NAME3      VARCHAR2(60),
+  TJ_COLS_DESC3      VARCHAR2(1000),
+  TJ_COLS_CODE_DESC3 VARCHAR2(1000),
+  TJ_COLS_FLAG       CHAR(1),
+  TJ_COLS_DESC       VARCHAR2(1000),
+  MD5_FLAG           VARCHAR2(2),
+  ES_INDEX           VARCHAR2(60),
+  ROW_NUM_PERCENT    NUMBER(5,4) default 1,
+  MAX_LENGTH         NUMBER
+)
+tablespace HADOOP
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column SYS_ZHCX_COLS.ROW_NUM_PERCENT
+  is '不为空的百分比';
+comment on column SYS_ZHCX_COLS.MAX_LENGTH
+  is '最大长度';

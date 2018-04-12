@@ -1,0 +1,28 @@
+-- Create table
+create table SYS_LRD_TMP_TAB_MAP
+(
+  TMP_TABLE_NAME VARCHAR2(100),
+  LRD_TASK_ID    VARCHAR2(20),
+  TAB_STAT       VARCHAR2(2)
+)
+tablespace ODS_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 8K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table SYS_LRD_TMP_TAB_MAP
+  is '文件加载用临时表';
+-- Add comments to the columns 
+comment on column SYS_LRD_TMP_TAB_MAP.TMP_TABLE_NAME
+  is '临时表名';
+comment on column SYS_LRD_TMP_TAB_MAP.LRD_TASK_ID
+  is '文件名';
+comment on column SYS_LRD_TMP_TAB_MAP.TAB_STAT
+  is '使用状态 0:未使用 1:使用中';

@@ -1,0 +1,52 @@
+-- Create table
+create table SYS_LRD_TASK
+(
+  LRD_TASK_ID VARCHAR2(20),
+  FILE_PATH   VARCHAR2(1000),
+  FILE_NAME   VARCHAR2(1000),
+  TABLE_NAME  VARCHAR2(100),
+  OPT_USER    VARCHAR2(100),
+  CRT_TIME    TIMESTAMP(6),
+  UPT_TIME    TIMESTAMP(6),
+  STAT        VARCHAR2(2),
+  START_TIME  TIMESTAMP(6),
+  END_TIME    TIMESTAMP(6),
+  ST_FLAG     VARCHAR2(1)
+)
+tablespace ZHCX_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table SYS_LRD_TASK
+  is '文件加载任务表';
+-- Add comments to the columns 
+comment on column SYS_LRD_TASK.LRD_TASK_ID
+  is '任务ID';
+comment on column SYS_LRD_TASK.FILE_PATH
+  is '文件路径';
+comment on column SYS_LRD_TASK.FILE_NAME
+  is '文件名';
+comment on column SYS_LRD_TASK.TABLE_NAME
+  is '表名';
+comment on column SYS_LRD_TASK.OPT_USER
+  is '操作用户';
+comment on column SYS_LRD_TASK.CRT_TIME
+  is '创建时间';
+comment on column SYS_LRD_TASK.UPT_TIME
+  is '更新时间';
+comment on column SYS_LRD_TASK.STAT
+  is '状态 0:未执行,等待中 1:执行中 -1:出现错误';
+comment on column SYS_LRD_TASK.START_TIME
+  is '开始执行时间';
+comment on column SYS_LRD_TASK.END_TIME
+  is '结束时间';
+comment on column SYS_LRD_TASK.ST_FLAG
+  is '状态 0:无效 1:有效 ';

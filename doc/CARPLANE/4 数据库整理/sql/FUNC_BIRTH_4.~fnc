@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION FUNC_BIRTH_4(P_STR IN VARCHAR2)
+  RETURN VARCHAR2 IS
+  V_STR number(10) := 0;
+BEGIN
+  V_STR :=  to_number(to_char(substr(P_STR,0,4)));
+  if V_STR > 1900 then
+     RETURN V_STR;
+  else
+      RETURN null;
+  end if;
+  EXCEPTION WHEN OTHERS THEN
+  BEGIN
+      RETURN NULL;
+  END;
+END FUNC_BIRTH_4;
+/
